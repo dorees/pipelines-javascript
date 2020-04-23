@@ -28,4 +28,4 @@ steps:
     command: 'install'
   displayName: 'npm install'
 
-- script: 'echo $(a)'
+- script: 'echo $env:PASS'

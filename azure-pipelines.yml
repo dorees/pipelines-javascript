@@ -29,7 +29,7 @@ steps:
   displayName: 'npm install'
 
 - script: echo '$env:MY_TOKEN'
-- script: echo '$env:MY_TOKEN'
+- script: echo '$(pass)'
 
 env:
   MY_TOKEN: $(pass)

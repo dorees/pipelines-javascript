@@ -29,13 +29,8 @@ pool:
 container: node:12
 
 steps:
-  ${{ if eq(parameters.install, true) }}:
-  - task: Npm@1
-    inputs:
-      command: 'install'
-    displayName: 'npm install'
-
-- script: echo $MY_TOKEN && echo '$(pass)' 
-
-  env:
-    MY_TOKEN: $(pass)
+${{ if eq(parameters.install, true)}}:
+- task: Npm@1
+  inputs:
+    command: 'install'
+  displayName: 'npm install'

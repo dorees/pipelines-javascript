@@ -25,3 +25,11 @@ steps:
 - task: Npm@1
   inputs:
     command: 'ci'
+
+- script: mocha test --reporter mocha-junit=reporter
+
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: JUnit
+    testResultsFiles: '**/TEST-RESULTS.xml'

@@ -25,8 +25,7 @@ pool:
 
 container: node:12
 
-jobs:
-- ${{ if contains(parameters.install, true) }}:
+${{ if contains(parameters.install, true) }}:
   - job: Test
     steps:
     ${{ if eq(parameters.install, true)}}:

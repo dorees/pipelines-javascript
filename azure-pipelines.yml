@@ -28,8 +28,7 @@ steps:
     command: 'install'
   displayName: 'npm install'
 
-- script: echo '$env:MY_TOKEN'
-- script: echo '$(pass)'
+- script: echo '$env:MY_TOKEN' && echo '$(pass)' 
 
-env:
-  MY_TOKEN: $(pass)
+  env:
+    MY_TOKEN: $(pass)

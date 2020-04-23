@@ -26,11 +26,6 @@ pool:
 container: node:12
 
 steps:
-  - task: ManualIntervention@8
-    inputs:
-      instructions: 'Check these instructions, pretend to know what''s going on and approve...'
-      emailRecipients: 'daniel.rees@devopsgroup.com'
-
   - task: Npm@1
     inputs:
       command: 'install'

@@ -9,10 +9,7 @@ parameters:
     type: boolean
     default: false
 
-trigger:
-  branches:
-    include:
-      - '*'
+trigger: none
 
 variables:
     - group: test
@@ -28,9 +25,12 @@ pool:
 
 container: node:12
 
-steps:
-${{ if eq(parameters.install, true)}}:
-- task: Npm@1
-  inputs:
-    command: 'install'
-  displayName: 'npm install'
+jobs:
+- ${{ if contains(parameters.install, true) }}:
+  - job: Test
+    steps:
+    ${{ if eq(parameters.install, true)}}:
+    - task: Npm@1
+      inputs:
+        command: 'install'
+      displayName: 'npm install'

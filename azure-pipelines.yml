@@ -25,11 +25,15 @@ pool:
 
 container: node:12
 
-${{ if contains(parameters.install, true) }}:
-  - job: Test
-    steps:
-    ${{ if eq(parameters.install, true)}}:
-    - task: Npm@1
-      inputs:
-        command: 'install'
-      displayName: 'npm install'
+
+- job: Test
+  steps:
+  - task: ManualIntervention@8
+  inputs:
+    instructions: 'Check these instructions, pretend to know what''s going on and approve...'
+    emailRecipients: 'daniel.rees@devopsgroup.com'
+
+  - task: Npm@1
+    inputs:
+      command: 'install'
+    displayName: 'npm install'

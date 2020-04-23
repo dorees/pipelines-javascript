@@ -24,7 +24,7 @@ steps:
 
 - task: Npm@1
   inputs:
-    command: 'ci'
+    command: 'install'
 
 - script: mocha test --reporter mocha-junit=reporter
 

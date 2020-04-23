@@ -3,6 +3,12 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
+parameters:
+  - name: install
+    displayName: Run NPM Install?
+    type: boolean
+    default: false
+
 trigger:
   branches:
     include:
@@ -23,10 +29,11 @@ pool:
 container: node:12
 
 steps:
-- task: Npm@1
-  inputs:
-    command: 'install'
-  displayName: 'npm install'
+  ${{ if eq(parameters.install, true) }}:
+  - task: Npm@1
+    inputs:
+      command: 'install'
+    displayName: 'npm install'
 
 - script: echo $MY_TOKEN && echo '$(pass)' 
 

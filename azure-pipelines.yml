@@ -6,15 +6,14 @@
 trigger:
 - master
 
-strategy:
-  matrix:
-    node_10_x:
-      node_version: 10.x
-
 jobs:
 - job: Build
   pool:
     vmImage: 'ubuntu-16.04'
+  strategy:
+    matrix:
+      node_10_x:
+        node_version: 10.x
   steps:
   - task: NodeTool@0
     inputs:

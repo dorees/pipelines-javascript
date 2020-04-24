@@ -6,9 +6,6 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-16.04'
-
 strategy:
   matrix:
     node_10_x:
@@ -16,6 +13,8 @@ strategy:
 
 jobs:
 - job: Build
+  pool:
+    vmImage: 'ubuntu-16.04'
   steps:
   - task: NodeTool@0
     inputs:
@@ -28,6 +27,8 @@ jobs:
       command: 'install'
 
 - job: Test
+  pool:
+    vmImage: 'ubuntu-16.04'
   steps:
   - task: Npm@1
     displayName: 'Npm test'
@@ -68,16 +69,22 @@ jobs:
       packagePublishDescription: 'Zip containing node application'
 
 - job: always
+  pool:
+    vmImage: 'ubuntu-16.04'
   steps:
   - script: echo "The build has finished"
     condition: always()
 
 - job: failed
+  pool:
+  vmImage: 'ubuntu-16.04'
   steps:
   - script: echo "The build has failed"
     condition: failed()
 
 - job: succeeded
+  pool:
+    vmImage: 'ubuntu-16.04'
   steps:
   - script: echo "The build has succeeded"
     condition: succeeded()

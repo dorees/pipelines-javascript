@@ -54,7 +54,7 @@ steps:
       package.json
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-- task: PublishBuildArtifacts@1
-  displayName: Upload zip to Azure Artifacts
+- task: PublishPipelineArtifact@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    targetPath: $(Build.ArtifactStagingDirectory)
+    artifactName: NodeApp

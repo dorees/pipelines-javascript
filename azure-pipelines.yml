@@ -72,11 +72,11 @@ jobs:
   dependsOn:
   - Build 
   - Test
+  condition: always()
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
   - script: echo "The build has finished"
-    condition: always()
 
 - job: failed
   dependsOn:

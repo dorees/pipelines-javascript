@@ -56,3 +56,5 @@ steps:
 
 - task: PublishBuildArtifacts@1
   displayName: Upload zip to Azure Artifacts
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'

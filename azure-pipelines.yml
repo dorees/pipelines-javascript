@@ -75,15 +75,21 @@ jobs:
     condition: always()
 
 - job: failed
+  dependsOn:
+  - Build 
+  - Test
+  condition: failed('Test')
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
   - script: echo "The build has failed"
-    condition: failed()
 
 - job: succeeded
+  dependsOn:
+  - Build
+  - Test
+  condition: succeeded('Test')
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
   - script: echo "The build has succeeded"
-    condition: succeeded()

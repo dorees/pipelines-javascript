@@ -14,51 +14,70 @@ strategy:
     node_10_x:
       node_version: 10.x
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: $(node_version)
-  displayName: 'Install Node.js'
+jobs:
+- job: Build
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: $(node_version)
+    displayName: 'Install Node.js'
 
-- task: Npm@1
-  displayName: 'Npm install'
-  inputs:
-    command: 'install'
+  - task: Npm@1
+    displayName: 'Npm install'
+    inputs:
+      command: 'install'
 
-- task: Npm@1
-  displayName: 'Npm test'
-  inputs:
-    command: 'custom'
-    customCommand: 'run coverage'
+- job: Test
+  steps:
+  - task: Npm@1
+    displayName: 'Npm test'
+    inputs:
+      command: 'custom'
+      customCommand: 'run coverage'
 
-- task: PublishTestResults@2
-  displayName: 'Publish test results'
-  condition: succeededOrFailed()
-  inputs:
-    testRunner: JUnit
-    testResultsFiles: '**/TEST-RESULTS.xml'
+  - task: PublishTestResults@2
+    displayName: 'Publish test results'
+    condition: succeededOrFailed()
+    inputs:
+      testRunner: JUnit
+      testResultsFiles: '**/TEST-RESULTS.xml'
 
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish code coverage'
-  inputs:
-    codeCoverageTool: Cobertura
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
-    reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
+  - task: PublishCodeCoverageResults@1
+    displayName: 'Publish code coverage'
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
+      reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
 
-- task: CopyFiles@2
-  displayName: Package app
-  inputs:
-    SourceFolder: '$(System.DefaultWorkingDirectory)'
-    Contents: |
-      **\*.js
-      package.json
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  - task: CopyFiles@2
+    displayName: Package app
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)'
+      Contents: |
+        **\*.js
+        package.json
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-- task: UniversalPackages@0
-  displayName: Universal Publish
-  inputs:
-    command: publish
-    publishDirectory: '$(Build.ArtifactStagingDirectory)'
-    vstsFeedPublish: 'dna-dummy/dna-dummy-feed'
-    vstsFeedPackagePublish: 'dna-dummy-node'
-    packagePublishDescription: 'Zip containing node application'
+  - task: UniversalPackages@0
+    displayName: Universal Publish
+    inputs:
+      command: publish
+      publishDirectory: '$(Build.ArtifactStagingDirectory)'
+      vstsFeedPublish: 'dna-dummy/dna-dummy-feed'
+      vstsFeedPackagePublish: 'dna-dummy-node'
+      packagePublishDescription: 'Zip containing node application'
+
+- job: always
+  steps:
+  - script: echo "The build has finished"
+    condition: always()
+
+- job: failed
+  steps:
+  - script: echo "The build has failed"
+    condition: failed()
+
+- job: succeeded
+  steps:
+  - script: echo "The build has succeeded"
+    condition: succeeded()

@@ -76,7 +76,7 @@ jobs:
 
 - job: failed
   pool:
-  vmImage: 'ubuntu-16.04'
+    vmImage: 'ubuntu-16.04'
   steps:
   - script: echo "The build has failed"
     condition: failed()

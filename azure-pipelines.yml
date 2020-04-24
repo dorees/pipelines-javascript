@@ -54,7 +54,11 @@ steps:
       package.json
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-- task: PublishPipelineArtifact@1
+- task: UniversalPackages@0
+  displayName: Universal Publish
   inputs:
-    targetPath: $(Build.ArtifactStagingDirectory)
-    artifactName: NodeApp
+    command: publish
+    publishDirectory: '$(Build.ArtifactStagingDirectory)'
+    vstsFeedPublish: 'dna-dummy/dna-dummy-feed'
+    vstsFeedPackagePublish: 'dna-dummy-node'
+    packagePublishDescription: 'Zip containing node application'

@@ -26,9 +26,9 @@ jobs:
       command: 'install'
 
   - script: |
-        GIT_SHORTSHA=`git rev-parse --short $(Build.SourceVersion)`
-        echo "Git short sha: ${GIT_SHORTSHA}"
-        echo "##vso[task.setvariable variable=short_sha]${GIT_SHORTSHA}"
+      GIT_SHORTSHA=`git rev-parse --short $(Build.SourceVersion)`
+      echo "Git short sha: ${GIT_SHORTSHA}"
+      echo "##vso[task.setvariable variable=short_sha]${GIT_SHORTSHA}"
 
   - script: echo $(short_sha)
   

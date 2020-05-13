@@ -24,8 +24,12 @@ jobs:
     displayName: 'Npm install'
     inputs:
       command: 'install'
-  - task: CmdLine@2
-    inputs:
-      script: |
+
+  - script: |
         GIT_SHORTSHA=`git rev-parse --short $(Build.SourceVersion)`
         echo "Git short sha: ${GIT_SHORTSHA}"
+        echo "##vso[task.setvariable variable=short_sha]${GIT_SHORTSHA}"
+
+  - scirpt: echo $(short_sha)
+  
+        

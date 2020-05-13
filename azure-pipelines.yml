@@ -24,77 +24,8 @@ jobs:
     displayName: 'Npm install'
     inputs:
       command: 'install'
-
-- job: Test
-  dependsOn: Build
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - task: Npm@1
-    displayName: 'Npm test'
+  - task: CmdLine@2
     inputs:
-      command: 'custom'
-      customCommand: 'run coverage'
-
-  - task: PublishTestResults@2
-    displayName: 'Publish test results'
-    condition: succeededOrFailed()
-    inputs:
-      testRunner: JUnit
-      testResultsFiles: '**/TEST-RESULTS.xml'
-
-  - task: PublishCodeCoverageResults@1
-    displayName: 'Publish code coverage'
-    inputs:
-      codeCoverageTool: Cobertura
-      summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
-      reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
-
-  - task: CopyFiles@2
-    displayName: Package app
-    inputs:
-      SourceFolder: '$(System.DefaultWorkingDirectory)'
-      Contents: |
-        **\*.js
-        package.json
-      TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-  - task: UniversalPackages@0
-    displayName: Universal Publish
-    inputs:
-      command: publish
-      publishDirectory: '$(Build.ArtifactStagingDirectory)'
-      vstsFeedPublish: 'dna-dummy/dna-dummy-feed'
-      vstsFeedPackagePublish: 'dna-dummy-node'
-      packagePublishDescription: 'Zip containing node application'
-
-- job: always
-  dependsOn:
-  - Build 
-  - Test
-  condition: always()
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - script: echo "The build has finished"
-  - script: terraform --version
-
-- job: failed
-  dependsOn:
-  - Build 
-  - Test
-  condition: failed('Test')
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - script: echo "The build has failed"
-
-- job: succeeded
-  dependsOn:
-  - Build
-  - Test
-  condition: succeeded('Test')
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - script: echo "The build has succeeded"
+      script: |
+        GIT_SHORTSHA=`git rev-parse --short $(Build.SourceVersion)`
+        echo "Git short sha: ${GIT_SHORTSHA}"

@@ -34,12 +34,4 @@ jobs:
 
   - script: echo $(short_sha)
 
-- deployment: apply
-  displayName: 'Apply'
-  environment: dev.portal
-  strategy:
-    runOnce:
-      deploy:
-        steps:
-        - script:
-            echo $(Build.BuildNumber)
+  - script: echo $(Build.BuildNumber)

@@ -3,10 +3,10 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
-name: $(Date:yyy-MM-dd)$(Rev:.rr)_$(TeamProject)_$(Build.DefinitionName)_$(SourceBranchName)
+name: $(BuildID)_$(TeamProject)_$(Build.DefinitionName)_$(SourceBranchName)
 
-# 1:  $(Date:MMddyy)$(Rev:.rr)_$(TeamProject)_$(Build.DefinitionName)_$(SourceBranchName)
-# 2: 
+# 1:  $(Date:yyy-MM-dd)$(Rev:.rr)_$(TeamProject)_$(Build.DefinitionName)_$(SourceBranchName)
+# 2:  $(BuildID)_$(TeamProject)_$(Build.DefinitionName)_$(SourceBranchName)
 
 trigger:
 - master

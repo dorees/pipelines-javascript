@@ -3,6 +3,8 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
+name: $(TeamProject)_$(Build.DefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+
 trigger:
 - master
 
@@ -15,15 +17,15 @@ jobs:
       node_10_x:
         node_version: 10.x
   steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: $(node_version)
-    displayName: 'Install Node.js'
+  # - task: NodeTool@0
+  #   inputs:
+  #     versionSpec: $(node_version)
+  #   displayName: 'Install Node.js'
 
-  - task: Npm@1
-    displayName: 'Npm install'
-    inputs:
-      command: 'install'
+  # - task: Npm@1
+  #   displayName: 'Npm install'
+  #   inputs:
+  #     command: 'install'
 
   - script: |
       GIT_SHORTSHA=`git rev-parse --short $(Build.SourceVersion)`
@@ -39,4 +41,5 @@ jobs:
     runOnce:
       deploy:
         steps:
-        - script: echo hello
+        - script:
+            echo $(Build.BuildNumber)

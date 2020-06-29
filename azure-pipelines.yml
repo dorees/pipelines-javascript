@@ -43,7 +43,6 @@ jobs:
     inputs:
       SourceFolder: '$(Build.SourcesDirectory)'
       Contents: |
-        **
         !(.dockerignore|.gitignore)
       TargetFolder: '$(Build.SourcesDirectory)/src'
       CleanTargetFolder: true

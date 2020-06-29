@@ -44,7 +44,8 @@ jobs:
       SourceFolder: '$(Build.SourcesDirectory)'
       Contents: |
         **
-        !.git/*
+        !.gitignore
+        !(.dockerignore)
       TargetFolder: '$(Build.SourcesDirectory)/src'
       CleanTargetFolder: true
 

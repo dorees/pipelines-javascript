@@ -39,10 +39,19 @@ jobs:
 
   - script: echo $(Build.BuildNumber)
 
+  - task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: |
+      **
+      !.git/*
+    TargetFolder: '$(Build.SourcesDirectory)/src'
+    CleanTargetFolder: true
+
   - task: ArchiveFiles@2
     displayName: 'Create Artifact'
     inputs:
-      rootFolderOrFile: $(Build.SourcesDirectory)
+      rootFolderOrFile: $(Build.SourcesDirectory)/src
       includeRootFolder: false
       archiveType: 'zip'
       archiveFile: 'thisZip'

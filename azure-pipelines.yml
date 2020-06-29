@@ -44,7 +44,11 @@ jobs:
       SourceFolder: '$(Build.SourcesDirectory)'
       Contents: |
         **/*
-        !.(dockerignore|gitignore)
+        !.git/**/*
+        !.gitignore
+        !.dockerignore
+        !README.md
+        !azure-pipelines.yml
       TargetFolder: '$(Build.SourcesDirectory)/src'
       CleanTargetFolder: true
 
